@@ -1,4 +1,6 @@
 String gameState;
+String[] lose = {"YOU LOST", "YOU DIED", "YOU SELFISH", "YOU FAIL"};
+int index = int(random(lose.length));
 PImage dragonball;
 PImage dragonballs;
 PImage shenron;
@@ -16,6 +18,8 @@ PImage igloo;
 PImage basketball;
 PImage goku;
 PImage space;
+PImage thumbsup;
+PImage angry;
 
 void setup(){
  size(900, 850);
@@ -34,6 +38,8 @@ void setup(){
  dragonballs = loadImage("dragonballs.png");
  goku = loadImage("goku.png");
  space = loadImage("astrounaut.jpg");
+ thumbsup = loadImage("thumbsup.png");
+ angry = loadImage("angry.jpg");
  ballX = random(0, width);
  ballY = random(0,height);
  gameState = "START";
@@ -125,7 +131,9 @@ void playGame(){
   line(140, 450, 200, 450);
   fill(102, 51, 0);
   image(ball1, ballX, ballY);
-  
+  fill(0);
+  text("To play this game click on the dragon ball with your mouse", 5, 750);
+  text("You are home", 5, 100);
   }
 
 void playGame2(){
@@ -143,12 +151,16 @@ void playGame2(){
     fill(100, 210, 12);
   }
   image(ball2, 700, 200);
+  text("Whoa where are we?", 250, 650);
+  
   
 }  
   
 void playGame3(){
   image(player,0,0);
   image(ball3,160, 660);
+  fill(0);
+  text("WHAT? Are we in the real world", 5, 100);
   
 }
 
@@ -161,11 +173,14 @@ void playGame4(){
   ellipse(650,100, 100, 100);
   image(igloo, 650, 500 );
   image(ball4, ballX, ballY);
+  fill(0);
+  text("YES! we are back in my world", 5, 100);
 }
 
 void playGame5(){
   background(basketball);
   image(ball5, 620, 100);
+  text("OH NO, what is this?", 5, 50);
   
 }
 
@@ -175,11 +190,16 @@ void playGame6(){
   image(ball6, 450, 150);
   fill(196, 164, 132);
   rect(0, 600, 900, 850);
+  fill(0);
+  text("Is that Goku and Vegeta?", 5, 500);
 }
 
 void playGame7(){
   background(space);
   image(ball7, 630, 400);
+  fill(0);
+  text("PLEASE, take me home", 5, 50);
+
   
   
 }
@@ -206,11 +226,28 @@ void playGame8(){
   line(140, 450, 200, 450);
   fill(102, 51, 0);
   image(dragonballs, 500, 400);
+  fill(0);
+  text("Finally, back home", 5, 50);
+  text("I have all the dragon balls, time to summon it.", 5, 100);
+  text("Eternal dragon rise and grant me my wish.", 5, 150);
+
+
 
 }
 
 void playGame9(){
+  background(0);
   image(shenron, 0, 0);
+  fill(0);
+  text("I am the eternal dragon", 5, 25);
+  text("I will grant you any wish", 5, 65);
+  text("Immortality",50,700);
+  text("Cure the world", 650, 700);
+  fill(255, 0, 0);
+  text("For inmortality press down", 5, 800);
+  fill(0, 255, 0);
+  text("For cure press up", 650, 800);
+
   if (key == CODED ){
     if(keyCode == UP){
    gameState = "WIN"; 
@@ -221,13 +258,35 @@ void playGame9(){
 
 void winGame(){
   background(255);
-}
-
-void loseGame(){
-  background(135,206,250);
+  fill(0);
+  text("Goku congratulates you for what you did", 5 , 760);
+  text("YOU WIN", 5 , 820);
+  text("To restart press r", 600, 800);
+  image(thumbsup, 0, 0);
+  if(keyPressed){
+  if (key == 'r' || key == 'R'){
+    gameState = "START";
+  
+  }
+    
+  }
+  
   
 }
 
-void resetGame(){
-
+void loseGame(){
+  background(250);
+  fill(0);
+  text(lose[index], 5, 800);
+  text("Goku did not like your decision, He is powering up to fight you", 5,650);
+  text("To restart press r", 600, 800);
+  image(angry,0,0);
+  if(keyPressed){
+  if (key == 'r' || key == 'R'){
+    gameState = "START";
+  }
+    
+  }
+  
+  
 }
