@@ -1,3 +1,5 @@
+// This game is called The Journey all of the instructions are in the game 
+
 String gameState;
 String[] lose = {"YOU LOST", "YOU DIED", "YOU SELFISH", "YOU FAIL"};
 int index = int(random(lose.length));
