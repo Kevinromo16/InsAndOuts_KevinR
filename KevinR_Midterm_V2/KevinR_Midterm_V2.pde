@@ -1,4 +1,8 @@
 // This game is called The Journey all of the instructions are in the game 
+import processing.sound.*;
+
+SoundFile file;
+
 
 String gameState;
 String[] lose = {"YOU LOST", "YOU DIED", "YOU WERE SELFISH", "YOU FAIL"};
@@ -25,6 +29,9 @@ PImage angry;
 
 void setup(){
  size(900, 850);
+ file = new SoundFile(this,"chala.mp3");
+ file.play();
+ file.loop();
  dragonball = loadImage("dragonball.png");
  shenron = loadImage("shenron.png");
  ball1 = loadImage("ball1.png");
@@ -101,10 +108,11 @@ void startGame() {
   background(235,52,107);
   image (dragonball,100,50);
   textSize(30);
+  text("Now Playing: Cha-La Head Cha-La", 2,50);
   text("Majestic right?", 2, 690);
   text("These are the dragonballs you can grant any wish you want with them.", 2, 740);
   text("However they are lost and you must find them.", 2, 790);
-  text("press left click to continue.", 2, 840);
+  text("press right arrow to continue.", 2, 840);
   fill(0);
   if (key == CODED ){
     if(keyCode == RIGHT){
