@@ -1,10 +1,13 @@
 // This game is called The Journey all of the instructions are in the game 
+
+//sound library was imported from the processing library
 import processing.sound.*;
 
 SoundFile file;
 
 
 String gameState;
+//this array is used in the loseGame state
 String[] lose = {"YOU LOST", "YOU DIED", "YOU WERE SELFISH", "YOU FAIL"};
 int index = int(random(lose.length));
 PImage dragonball;
@@ -29,9 +32,13 @@ PImage angry;
 
 void setup(){
  size(900, 850);
+ 
+ //song loaded
  file = new SoundFile(this,"chala.mp3");
  file.play();
  file.loop();
+ 
+ //Images loaded 
  dragonball = loadImage("dragonball.png");
  shenron = loadImage("shenron.png");
  ball1 = loadImage("ball1.png");
@@ -49,13 +56,19 @@ void setup(){
  space = loadImage("astrounaut.jpg");
  thumbsup = loadImage("thumbsup.png");
  angry = loadImage("angry.jpg");
+ 
+ //random function
  ballX = random(0, width);
  ballY = random(0,height);
+ 
+ //start gameState
  gameState = "START";
 }
 
 void draw() {
   background(0);
+  
+  //all the gameStates I used
   if(gameState == "START"){
     startGame();
   }  else if (gameState == "PLAY") {
@@ -84,6 +97,7 @@ void draw() {
   
 }
 
+//mousedPressed for clicking the dragon ball on each screen, to go to the next gameState
 void mousePressed(){
   if (gameState == "PLAY" && mouseX > ballX && mouseX < ballX + 146 && mouseY > ballY && mouseY < ballY + 155){
     gameState = "PLAY2";
@@ -104,7 +118,9 @@ void mousePressed(){
   }
 }
 
+//Start scene
 void startGame() {
+  
   background(235,52,107);
   image (dragonball,100,50);
   textSize(30);
@@ -114,6 +130,8 @@ void startGame() {
   text("However they are lost and you must find them.", 2, 790);
   text("press right arrow to continue.", 2, 840);
   fill(0);
+  
+  //key==CODED to be able to use arrow keys to go to the next gameState
   if (key == CODED ){
     if(keyCode == RIGHT){
    gameState = "PLAY"; 
@@ -121,6 +139,9 @@ void startGame() {
 }
 
 void playGame(){
+  
+  //This is from my SS1
+  
   fill(51, 255, 255);
   rect(0,0,1080,850);
   fill(0, 255, 150);
@@ -140,6 +161,7 @@ void playGame(){
   fill(0, 0, 0);
   line(140, 450, 200, 450);
   fill(102, 51, 0);
+  //this image is placed randomly around the screen because of ballX and ballY
   image(ball1, ballX, ballY);
   fill(0);
   text("To play this game click on the dragon ball with your mouse", 5, 750);
@@ -147,6 +169,8 @@ void playGame(){
   }
 
 void playGame2(){
+  //This is from my SS3
+  
   background(255,220,200);
   for(int i=1; i<=900; i+=2){
   rect(0, i, 200,i);
@@ -155,6 +179,8 @@ void playGame2(){
   line(200,425,900,425);
   ellipse(400, 200, 275, 200);
   triangle(850, 700, 600, 700, 725, 500);
+  
+ //Code to change screen from green to red
   if (mouseX < 550 && mouseY < 850){
     fill(255,100,100);
   } else if ( mouseX < 800 && mouseY < 850){
@@ -182,6 +208,7 @@ void playGame4(){
   fill(255,255,0);
   ellipse(650,100, 100, 100);
   image(igloo, 650, 500 );
+  //random function
   image(ball4, ballX, ballY);
   fill(0);
   text("YES! we are back in my world", 5, 100);
@@ -273,6 +300,7 @@ void winGame(){
   text("YOU WIN", 5 , 820);
   text("To restart press r", 600, 800);
   image(thumbsup, 0, 0);
+  //Restart button function
   if(keyPressed){
   if (key == 'r' || key == 'R'){
     gameState = "START";
@@ -287,10 +315,12 @@ void winGame(){
 void loseGame(){
   background(250);
   fill(0);
+  //array text is here
   text(lose[index], 5, 800);
   text("Goku did not like your decision, He is powering up to fight you", 5,650);
   text("To restart press r", 600, 800);
   image(angry,0,0);
+  //Restart button function
   if(keyPressed){
   if (key == 'r' || key == 'R'){
     gameState = "START";
