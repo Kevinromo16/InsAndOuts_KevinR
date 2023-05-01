@@ -5,8 +5,10 @@
 import processing.serial.*;
 Serial myPort;
 int val=0;
+
 void setup(){
   size(700,700);
+  
   printArray(Serial.list()); // this line prints the port list to the console
   String portName = Serial.list()[1]; //change the number in the [] for the port you need
   myPort = new Serial(this, portName, 9600);
