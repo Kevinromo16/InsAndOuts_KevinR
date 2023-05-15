@@ -9,11 +9,14 @@ const int led4 = 10;
 const int led5 = 9;
 const int led6 = 7;
 const int led7 = 6;
+int xVal = 0;
+int yVal = 0;
+int buttonVal = 0;
 
 
 
 void setup(){
-  pinMode(buttonPin, INPUT_PULLUP);
+  //pinMode(buttonPin, INPUT_PULLUP);
   Serial.begin(9600);
 
 
@@ -25,15 +28,21 @@ void setup(){
   pinMode(led6, OUTPUT);
   pinMode(led7, OUTPUT);
 
-  
+  pinMode(A0, INPUT);
+  pinMode(A1, INPUT);
+  pinMode(8, INPUT);
+  pinMode(8, INPUT_PULLUP);
 
 
 }
 
 void loop(){
-  int xVal= analogRead(xPin);
-  int yVal = analogRead(yPin);
-  int buttonVal = digitalRead(buttonPin);
+  xVal= analogRead(xPin);
+  yVal = analogRead(yPin);
+  buttonVal = digitalRead(buttonPin);
+
+  analogWrite(xPin, xVal/4);
+  analogWrite(yVal, yVal/4);
 
   Serial.print("X = ");
   Serial.print(xVal);
@@ -48,52 +57,51 @@ void loop(){
 
   if(Serial.available()>0){
     char led1State = Serial.read();
-    if(led1State == '1'){
+    if(led1State == '0'){
       digitalWrite(led1, HIGH);
     }
   }
 
   if(Serial.available()>0){
     char led2State = Serial.read();
-    if(led2State == '11'){
+    if(led2State == '1'){
       digitalWrite(led2, HIGH);
     }
   }
 
   if(Serial.available()>0){
     char led3State = Serial.read();
-    if(led3State == '3'){
+    if(led3State == '2'){
       digitalWrite(led3, HIGH);
     }
   }
 
   if(Serial.available()>0){
     char led4State = Serial.read();
-    if(led4State == '4'){
+    if(led4State == '3'){
       digitalWrite(led4, HIGH);
     }
   }
 
   if(Serial.available()>0){
     char led5State = Serial.read();
-    if(led5State == '5'){
+    if(led5State == '4'){
       digitalWrite(led5, HIGH);
     }
   }
 
   if(Serial.available()>0){
     char led6State = Serial.read();
-    if(led6State == '6'){
+    if(led6State == '5'){
       digitalWrite(led6, HIGH);
     }
   }
 
   if(Serial.available()>0){
     char led7State = Serial.read();
-    if(led7State == '7'){
+    if(led7State == '6'){
       digitalWrite(led7, HIGH);
     }
   }
-
   
 }

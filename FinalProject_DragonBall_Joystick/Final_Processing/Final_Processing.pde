@@ -6,9 +6,9 @@ import processing.serial.*;
 
 SoundFile file;
 Serial myPort;
-int x;
-int y;
-int b;
+String inString;
+String[] data;
+
 String portName;
 String val;
 
@@ -76,24 +76,6 @@ void setup(){
 
 void draw() {
   background(0);
-  //if(mousePressed && (mouseButton == LEFT)){
-  //  myPort.write('2');
-  //}
-  //if(mousePressed && (mouseButton == RIGHT)){
-  //  myPort.write('0');
-  //}
-  
-  //if (b == 1) // check if the button is pressed
-  //{
-  //  // draw a larger circle with specified coordinates
-  //  ellipse(x/2,y/2, 50, 50);
-  //} 
-  //else
-  //{
-  //  // we draw a circle with a certain coordinates
-  //  ellipse(x/2,y/2, 25, 25);
-  //}
-  //text("AnalogX="+(1023-x)+" AnalogY="+(1023-y),10,20);
   
   //all the gameStates I used
   if(gameState == "START"){
@@ -102,25 +84,25 @@ void draw() {
     playGame();
   } else if (gameState == "PLAY2") {
     playGame2();
-    myPort.write('1');
+    myPort.write('0');
   } else if (gameState == "PLAY3"){
     playGame3();
-    myPort.write('2');
+    myPort.write('1');
   } else if (gameState == "PLAY4"){
     playGame4();
-    myPort.write('3');
+    myPort.write('2');
   } else if (gameState == "PLAY5"){
     playGame5();
-    myPort.write('4');
+    myPort.write('3');
   } else if (gameState == "PLAY6"){
     playGame6();
-    myPort.write('5');
+    myPort.write('4');
   } else if (gameState == "PLAY7"){  
     playGame7();
-    myPort.write('6');
+    myPort.write('5');
   } else if (gameState == "PLAY8"){ 
     playGame8();
-    myPort.write('7');
+    myPort.write('6');
   } else if (gameState == "PLAY9"){
     playGame9();  
   }else if (gameState == "WIN") {
@@ -130,25 +112,14 @@ void draw() {
   }
   
 }
-//void serialEvent( Serial myPort) 
-//{
-//  // read the data until the newline n appears
-//  val = myPort.readStringUntil('\n');
+void serialEvent(Serial myPort) {
+  String inString = myPort.readStringUntil('\n');
   
-//  if (val != null)
-//  {
-//        val = trim(val);
-        
-//    // break up the decimal and new line reading
-//    int[] vals = int(splitTokens(val, ","));
-    
-//    // we assign to variables
-//    x = vals[0];
-//    y = vals[1] ;
-//    b = vals[2];
-
-//  }
-//}
+  if(inString != null)
+  inString = trim(inString);
+  data = split(inString, ",");
+  
+}
 
 //mousedPressed for clicking the dragon ball on each screen, to go to the next gameState
 void mousePressed(){
@@ -173,10 +144,18 @@ void mousePressed(){
 
 //Start scene
 void startGame() {
-  
+ 
   background(235,52,107);
   image (dragonball,100,50);
   textSize(30);
+  int xPos = int(data[0])/2;
+  int yPos = int(data[1])/2;
+  int Pressed = int(data[2]);
+  
+  if(Pressed == '0'){
+    gameState = "PLAY";
+  }
+  ellipse(xPos, yPos, 10, 10);
   text("Now Playing: Cha-La Head Cha-La", 2,50);
   text("Majestic right?", 2, 690);
   text("These are the dragonballs you can grant any wish you want with them.", 2, 740);
