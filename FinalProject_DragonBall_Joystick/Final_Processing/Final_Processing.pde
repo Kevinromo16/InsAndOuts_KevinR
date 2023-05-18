@@ -6,9 +6,9 @@ import processing.serial.*;
 
 SoundFile file;
 Serial myPort;
-String inString;
-String[] data;
-
+int x;
+int y;
+int b;
 String portName;
 String val;
 
@@ -46,7 +46,7 @@ void setup(){
  file = new SoundFile(this,"chala.mp3");
  file.play();
  file.loop();
- 
+
  //Images loaded 
  dragonball = loadImage("dragonball.png");
  shenron = loadImage("shenron.png");
@@ -65,44 +65,63 @@ void setup(){
  space = loadImage("astrounaut.jpg");
  thumbsup = loadImage("thumbsup.png");
  angry = loadImage("angry.jpg");
- 
+
  //random function
  ballX = random(0, width);
  ballY = random(0,height);
- 
+
  //start gameState
  gameState = "START";
 }
 
 void draw() {
   background(0);
-  
+  //if(mousePressed && (mouseButton == LEFT)){
+  //  myPort.write('2');
+  //}
+  //if(mousePressed && (mouseButton == RIGHT)){
+  //  myPort.write('0');
+  //}
+
+  //if (b == 1) // check if the button is pressed
+  //{
+  //  // draw a larger circle with specified coordinates
+  //  ellipse(x/2,y/2, 50, 50);
+  //} 
+  //else
+  //{
+  //  // we draw a circle with a certain coordinates
+  //  ellipse(x/2,y/2, 25, 25);
+  //}
+  //text("AnalogX="+(1023-x)+" AnalogY="+(1023-y),10,20);
+
   //all the gameStates I used
   if(gameState == "START"){
     startGame();
+    myPort.write('8');
   }  else if (gameState == "PLAY") {
     playGame();
   } else if (gameState == "PLAY2") {
     playGame2();
-    myPort.write('0');
+    myPort.write('1');
   } else if (gameState == "PLAY3"){
     playGame3();
-    myPort.write('1');
+    myPort.write('2');
   } else if (gameState == "PLAY4"){
     playGame4();
-    myPort.write('2');
+    myPort.write('3');
   } else if (gameState == "PLAY5"){
     playGame5();
-    myPort.write('3');
+    myPort.write('4');
   } else if (gameState == "PLAY6"){
     playGame6();
-    myPort.write('4');
+    myPort.write('5');
   } else if (gameState == "PLAY7"){  
     playGame7();
-    myPort.write('5');
+    myPort.write('6');
   } else if (gameState == "PLAY8"){ 
     playGame8();
-    myPort.write('6');
+    myPort.write('7');
   } else if (gameState == "PLAY9"){
     playGame9();  
   }else if (gameState == "WIN") {
@@ -110,16 +129,27 @@ void draw() {
   } else if  (gameState == "LOSE") {
     loseGame();
   }
-  
+
 }
-void serialEvent(Serial myPort) {
-  String inString = myPort.readStringUntil('\n');
-  
-  if(inString != null)
-  inString = trim(inString);
-  data = split(inString, ",");
-  
-}
+//void serialEvent( Serial myPort) 
+//{
+//  // read the data until the newline n appears
+//  val = myPort.readStringUntil('\n');
+
+//  if (val != null)
+//  {
+//        val = trim(val);
+
+//    // break up the decimal and new line reading
+//    int[] vals = int(splitTokens(val, ","));
+
+//    // we assign to variables
+//    x = vals[0];
+//    y = vals[1] ;
+//    b = vals[2];
+
+//  }
+//}
 
 //mousedPressed for clicking the dragon ball on each screen, to go to the next gameState
 void mousePressed(){
@@ -144,25 +174,17 @@ void mousePressed(){
 
 //Start scene
 void startGame() {
- 
+
   background(235,52,107);
   image (dragonball,100,50);
   textSize(30);
-  int xPos = int(data[0])/2;
-  int yPos = int(data[1])/2;
-  int Pressed = int(data[2]);
-  
-  if(Pressed == '0'){
-    gameState = "PLAY";
-  }
-  ellipse(xPos, yPos, 10, 10);
   text("Now Playing: Cha-La Head Cha-La", 2,50);
   text("Majestic right?", 2, 690);
   text("These are the dragonballs you can grant any wish you want with them.", 2, 740);
   text("However they are lost and you must find them.", 2, 790);
   text("press right arrow to continue.", 2, 840);
   fill(0);
-  
+
   //key==CODED to be able to use arrow keys to go to the next gameState
   if (key == CODED ){
     if(keyCode == RIGHT){
@@ -171,9 +193,9 @@ void startGame() {
 }
 
 void playGame(){
-  
+
   //This is from my SS1
-  
+
   fill(51, 255, 255);
   rect(0,0,1080,850);
   fill(0, 255, 150);
@@ -202,7 +224,7 @@ void playGame(){
 
 void playGame2(){
   //This is from my SS3
-  
+
   background(255,220,200);
   for(int i=1; i<=900; i+=2){
   rect(0, i, 200,i);
@@ -211,7 +233,7 @@ void playGame2(){
   line(200,425,900,425);
   ellipse(400, 200, 275, 200);
   triangle(850, 700, 600, 700, 725, 500);
-  
+
  //Code to change screen from green to red
   if (mouseX < 550 && mouseY < 850){
     fill(255,100,100);
@@ -220,16 +242,16 @@ void playGame2(){
   }
   image(ball2, 700, 200);
   text("Whoa where are we?", 250, 650);
-  
-  
+
+
 }  
-  
+
 void playGame3(){
   image(player,0,0);
   image(ball3,160, 660);
   fill(0);
   text("WHAT? Are we in the real world", 5, 100);
-  
+
 }
 
 void playGame4(){
@@ -250,7 +272,7 @@ void playGame5(){
   background(basketball);
   image(ball5, 620, 100);
   text("OH NO, what is this?", 5, 50);
-  
+
 }
 
 void playGame6(){
@@ -269,12 +291,12 @@ void playGame7(){
   fill(0);
   text("PLEASE, take me home", 5, 50);
 
-  
-  
+
+
 }
 
 void playGame8(){
-  
+
   fill(51, 255, 255);
   rect(0,0,1080,850);
   fill(0, 255, 150);
@@ -336,12 +358,12 @@ void winGame(){
   if(keyPressed){
   if (key == 'r' || key == 'R'){
     gameState = "START";
-  
+
   }
-    
+
   }
-  
-  
+
+
 }
 
 void loseGame(){
@@ -357,7 +379,7 @@ void loseGame(){
   if (key == 'r' || key == 'R'){
     gameState = "START";
   }
-    
+
   }
 }
   
